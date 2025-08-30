@@ -4,8 +4,48 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>100 Motivos</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <style>
+.carta {
+    max-width: 800px;
+    margin: 40px auto 120px auto;
+    padding: 40px;
+    background: #fffaf0; /* cor de papel antigo */
+    border: 2px solid #deb887; /* cor bege para lembrar envelope */
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    font-family: 'Dancing Script', cursive, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.5em;
+    line-height: 1.8em;
+    color: #4B1D3F;
+    text-align: justify;
+    position: relative;
+}
+
+/* Detalhe de dobra no canto superior direito */
+.carta::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-width: 0 40px 40px 0;
+    border-style: solid;
+    border-color: #f5deb3 transparent transparent transparent;
+    border-radius: 0 15px 0 0;
+}
+
+/* Título dentro da carta */
+.carta h1 {
+    font-size: 1.6em;
+    font-weight: normal;
+    text-align: center;
+    color: #c71585;
+    margin-bottom: 20px;
+}
+
+
 body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -133,10 +173,12 @@ header h1 {
 <div class="motivos">
     <h2>Motivos:</h2>
     <ol>
-      <li>Seu sorriso faz meus dias melhores</li> <li>Adoro quando você me abraça, me sinto seguro</li> <li>Você me entende só com o olhar</li> <li>O jeito que você olha pra mim me deixa bobo</li> <li>Você me faz querer ser uma pessoa melhor</li> <li>Rir com você é sempre o melhor momento do meu dia</li> <li>Você me faz acreditar de novo no amor de verdade</li> <li>O jeito que você se importa comigo é demais</li> <li>Até as coisas simples ficam incríveis quando você tá junto</li> <li>Seu coração é gigante e generoso</li> <li>Adoro que você me aceita do jeito que eu sou</li> <li>Seu toque é como um abraço de aconchego</li> <li>Você deixa tudo mais divertido</li> <li>Eu amo ouvir você falar, até repetido fica bom</li> <li>Você sempre sabe como me animar</li> <li>Admiro a sua força e determinação</li> <li>O jeito que você se dedica às coisas é inspirador</li> <li>Você é meu parceiro, meu amigo e meu amor</li> <li>O seu carinho me faz sentir especial todos os dias</li> <li>Nossas conversas longas são as melhores</li> <li>Você tem um humor que me conquista sempre</li> <li>Você é lindo por dentro e por fora</li> <li>O jeito que você olha pra mim me deixa feliz</li> <li>Você me ensina a ter mais paciência</li> <li>Seu carinho é impossível de esquecer</li> <li>Eu amo cada detalhe seu</li> <li>Você me faz sentir amado de verdade</li> <li>Você me surpreende todos os dias, e eu adoro isso</li> <li>Eu amo quando você está do meu lado</li> <li>Você me dá coragem pra tudo</li> <li>Seu apoio me fortalece</li> <li>Eu amo como você me toca, só de olhar já me sinto bem</li> <li>Você me entende sem eu precisar falar nada</li> <li>O jeito que você sorri pra mim é meu favorito</li> <li>Você é minha paz</li> <li>Eu amo como você cuida de mim</li> <li>Você é meu confidente</li> <li>O jeito que você se importa com todo mundo me inspira</li> <li>Você me faz querer ser melhor</li> <li>Nossas aventuras juntos são incríveis</li> <li>Você me completa</li> <li>Você me faz rir como ninguém</li> <li>Você é minha inspiração diária</li> <li>Adoro sua energia positiva</li> <li>Você me entende de um jeito único</li> <li>Qualquer dia fica especial com você</li> <li>Você me faz sentir vivo</li> <li>Adoro sua criatividade</li> <li>Você é a pessoa mais incrível que conheço</li> <li>Você ilumina qualquer ambiente</li> <li>Você me faz acreditar em milagres</li> <li>Adoro sua sinceridade</li> <li>Você é minha razão de sorrir</li> <li>O jeito que você me olha me faz feliz</li> <li>Você me inspira a sonhar mais alto</li> <li>Seu jeito de ser é autêntico e incrível</li> <li>Você me dá alegria nos dias ruins</li> <li>Adoro sua delicadeza</li> <li>Você é minha companhia favorita</li> <li>Você me faz sentir especial sem nem tentar</li> <li>Você é meu porto seguro</li> <li>O jeito que você me abraça é o melhor</li> <li>Você me ensina a valorizar cada momento</li> <li>Adoro sua paciência comigo</li> <li>Você me motiva todos os dias</li> <li>Adoro como você cuida de tudo ao redor</li> <li>Você me faz querer ser melhor sempre</li> <li>Adoro sua determinação</li> <li>Você é minha alegria diária</li> <li>Adoro sua espontaneidade</li> <li>Você me faz sentir amado sem esforço</li> <li>Eu amo cada gesto seu</li> <li>Você é minha felicidade</li> <li>O jeito que você me faz sentir único é incrível</li> <li>Você me ensina a amar sem medo</li> <li>Mesmo nos dias difíceis, você me faz rir</li> <li>Você é minha luz</li> <li>Você me dá confiança sempre</li> <li>Você me faz sentir seguro e amado</li> <li>Adoro sua generosidade</li> <li>Você é minha pessoa favorita no mundo</li> <li>Eu amo cada palavra sua</li> <li>Você me inspira com sua coragem</li> <li>Você me faz querer crescer</li> <li>Você é meu sonho realizado</li> <li>Adoro sua sensibilidade</li> <li>Você me faz sentir amado todos os dias</li> <li>Adoro como você me entende como ninguém mais</li> <li>Você é meu coração</li> <li>Adoro sua presença constante na minha vida</li> <li>Você me ensina a amar sem medo</li> <li>Você me faz feliz demais</li> <li>Você é minha melhor parte</li> <li>Adoro cada sorriso seu</li> <li>Você me faz acreditar no amor verdadeiro</li> <li>Você ilumina meus dias</li> <li>Adoro sua companhia em cada momento</li> <li>Você me completa</li> <li>Você me inspira a ser melhor</li> <li>Você é minha razão de viver</li> <li>Eu amo você de verdade, do fundo do coração</li>
+      <li>Seu sorriso faz meus dias melhores</li> <li>Adoro quando você me abraça, me sinto seguro</li> <li>Você me entende só com o olhar</li> <li>O jeito que você olha pra mim me deixa bobo</li> <li>Você me faz querer ser uma pessoa melhor</li> <li>Rir com você é sempre o melhor momento do meu dia</li> <li>Você me faz acreditar de novo no amor de verdade</li> <li>O jeito que você se importa comigo é demais</li> <li>Até as coisas simples ficam incríveis quando você tá junto</li> <li>Seu coração é gigante e generoso</li> <li>Adoro que você me aceita do jeito que eu sou</li> <li>Seu toque é como um abraço de aconchego</li> <li>Você deixa tudo mais divertido</li> <li>Eu amo ouvir você falar, até repetido fica bom</li> <li>Você sempre sabe como me animar</li> <li>Admiro a sua força e determinação</li> <li>O jeito que você se dedica às coisas é inspirador</li> <li>Você é m parceira, minha amiga e meu amor</li> <li>O seu carinho me faz sentir especial todos os dias</li> <li>Nossas conversas longas são as melhores</li> <li>Você tem um humor que me conquista sempre</li> <li>Você é linda por dentro e por fora</li> <li>O jeito que você olha pra mim me deixa feliz</li> <li>Você me ensina a ter mais paciência</li> <li>Seu carinho é impossível de esquecer</li> <li>Eu amo cada detalhe seu</li> <li>Você me faz sentir amado de verdade</li> <li>Você me surpreende todos os dias, e eu adoro isso</li> <li>Eu amo quando você está do meu lado</li> <li>Você me dá coragem pra tudo</li> <li>Seu apoio me fortalece</li> <li>Eu amo como você me toca, só de olhar já me sinto bem</li> <li>Você me entende sem eu precisar falar nada</li> <li>O jeito que você sorri pra mim é meu favorito</li> <li>Você é minha paz</li> <li>Eu amo como você cuida de mim</li> <li>Você é minha confidente</li> <li>O jeito que você se importa com todo mundo me inspira</li> <li>Você me faz querer ser melhor</li> <li>Nossas aventuras juntos são incríveis</li> <li>Você me completa</li> <li>Você me faz rir como ninguém</li> <li>Você é minha inspiração diária</li> <li>Adoro sua energia positiva</li> <li>Você me entende de um jeito único</li> <li>Qualquer dia fica especial com você</li> <li>Você me faz sentir vivo</li> <li>Adoro sua criatividade</li> <li>Você é a pessoa mais incrível que conheço</li> <li>Você ilumina qualquer ambiente</li> <li>Você me faz acreditar em milagres</li> <li>Adoro sua sinceridade</li> <li>Você é minha razão de sorrir</li> <li>O jeito que você me olha me faz feliz</li> <li>Você me inspira a sonhar mais alto</li> <li>Seu jeito de ser é autêntico e incrível</li> <li>Você me dá alegria nos dias ruins</li> <li>Adoro sua delicadeza</li> <li>Você é minha companhia favorita</li> <li>Você me faz sentir especial sem nem tentar</li> <li>Você é meu porto seguro</li> <li>O jeito que você me abraça é o melhor</li> <li>Você me ensina a valorizar cada momento</li> <li>Adoro sua paciência comigo</li> <li>Você me motiva todos os dias</li> <li>Adoro como você cuida de tudo ao redor</li> <li>Você me faz querer ser melhor sempre</li> <li>Adoro sua determinação</li> <li>Você é minha alegria diária</li> <li>Adoro sua espontaneidade</li> <li>Você me faz sentir amado sem esforço</li> <li>Eu amo cada gesto seu</li> <li>Você é minha felicidade</li> <li>O jeito que você me faz sentir único é incrível</li> <li>Você me ensina a amar sem medo</li> <li>Mesmo nos dias difíceis, você me faz rir</li> <li>Você é minha luz</li> <li>Você me dá confiança sempre</li> <li>Você me faz sentir seguro e amado</li> <li>Adoro sua generosidade</li> <li>Você é minha pessoa favorita no mundo</li> <li>Eu amo cada palavra sua</li> <li>Você me inspira com sua coragem</li> <li>Você me faz querer crescer</li> <li>Você é meu sonho realizado</li> <li>Adoro sua sensibilidade</li> <li>Você me faz sentir amado todos os dias</li> <li>Adoro como você me entende como ninguém mais</li> <li>Você é meu coração</li> <li>Adoro sua presença constante na minha vida</li> <li>Você me ensina a amar sem medo</li> <li>Você me faz feliz demais</li> <li>Você é minha melhor parte</li> <li>Adoro cada sorriso seu</li> <li>Você me faz acreditar no amor verdadeiro</li> <li>Você ilumina meus dias</li> <li>Adoro sua companhia em cada momento</li> <li>Você me completa</li> <li>Você me inspira a ser melhor</li> <li>Você é minha razão de viver</li> <li>Eu amo você de verdade, do fundo do coração</li>
     </ol>
 </div>
-
+<div class="carta">
+    <h1>Eu te amo minha Princesa, você me faz um homem melhor e um namorado melhor a cada dia, sou perdidamente apaixonado no seu sorriso, seus olhos me encantam, seu jeitinho apaixonante me faz a cada dia ter mais certeza de que é você que eu quero para sempre,mesmo que a gente se desentenda nosso amor é mais forte que qualquer desafio, sinto que podemos enfrentar qualquer coisa juntos</h1>
+</div>
 <div class="inferior">
     <button type="button" class="page-btn {% if request.path == '/' %}active{% endif %}" onclick="window.location.href='/home'">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icons" viewBox="0 0 16 16">
