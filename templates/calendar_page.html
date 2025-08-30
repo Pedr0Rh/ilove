@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendar Page</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+    h1 {
+        font-size: 2em;
+        margin-bottom: 20px;
+        text-align: center;
+        text-shadow: 2px 2px 5px #FFB6C1;
+    }
+
+    /* Contador bonito e romântico */
+    #contador {
+        font-size: 1.8em;
+        background: rgba(255, 255, 255, 0.6);
+        padding: 20px 40px;
+        border-radius: 30px;
+        box-shadow: 0 8px 20px rgba(255, 182, 193, 0.7);
+        animation: pulse 2s infinite;
+        text-align: center;
+        margin: 0 auto;
+        max-width: 500px;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+
+    #contador span {
+        color: #E75480;
+        font-weight: bold;
+    }
+
+    /* Slideshow */
+    #foto {
+        width: 100%;
+        max-width: 500px;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 20px;
+        margin-top: 20px;
+        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        box-shadow: 0 8px 25px rgba(255, 182, 193, 0.6);
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #foto.fade-out {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    /* Chuva de corações */
+    #heart-rain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+    }
+
+    .heart-drop {
+        position: absolute;
+        background-size: contain;
+        background-repeat: no-repeat;
+        opacity: 0.8;
+        animation: fall linear forwards;
+        filter: drop-shadow(0 0 10px #FF69B4);
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+        20% { opacity: 1; }
+        100% { transform: translateY(100vh) rotate(360deg); opacity: 0.9; }
+    }
+
+    /* Botões inferiores */
+    .inferior {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .page-btn {
+        margin: 0 5px;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        background-color: #ffe4e1;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .page-btn.active {
+        background-color: #E75480;
+        color: white;
+    }
+
+    .page-btn:hover {
+        box-shadow: 0 0 15px #FF69B4;
+    }
+</style>
+</head>
+<body>
+
+<div id="heart-rain"></div>
+
+<div class="superior">
+    <div class="retrato">
+        <img id="foto" src="" alt="Slideshow">
+    </div>
+
+    <h1>Eu te amo há:</h1>
+    <div id="contador">
+        <span id="meses">0</span> meses, 
+        <span id="dias">0</span> dias, <br>
+        <span id="horas">0</span> horas, 
+        <span id="minutos">0</span> minutos <br>e 
+        <span id="segundos">0</span> segundos
+    </div>
+</div>
+
+<div class="inferior">
+    <button type="button" class="page-btn {% if request.path == '/' %}active{% endif %}" onclick="window.location.href='/home'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icons" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2.854 15.854A.5.5 0 0 1 2 15.5V14H.5a.5.5 0 0 1-.354-.854l1.5-1.5A.5.5 0 0 1 2 11.5h1.793l.53-.53c-.771-.802-1.328-1.58-1.704-2.32-.798-1.575-.775-2.996-.213-4.092C3.426 2.565 6.18 1.809 8 3.233c1.25-.98 2.944-.928 4.212-.152L13.292 2 12.147.854A.5.5 0 0 1 12.5 0h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.854.354L14 2.707l-1.006 1.006c.236.248.44.531.6.845.562 1.096.585 2.517-.213 4.092-.793 1.563-2.395 3.288-5.105 5.08L8 13.912l-.276-.182a22 22 0 0 1-2.685-2.062l-.539.54V14a.5.5 0 0 1-.146.354zm2.893-4.894A20.4 20.4 0 0 0 8 12.71c2.456-1.666 3.827-3.207 4.489-4.512.679-1.34.607-2.42.215-3.185-.817-1.595-3.087-2.054-4.346-.761L8 4.62l-.358-.368c-1.259-1.293-3.53-.834-4.346.761-.392.766-.464 1.845.215 3.185.323.636.815 1.33 1.519 2.065l1.866-1.867a.5.5 0 1 1 .708.708z"/>
+        </svg>
+    </button>
+
+    <button type="button" class="page-btn {% if request.path == '/menssager' %}active{% endif %}" onclick="window.location.href='/menssager'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icons" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2.965 12.695a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2m-.8 3.108.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125M8 5.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
+        </svg>
+    </button>
+
+    <button type="button" class="page-btn {% if request.path == '/calendar_page' %}active{% endif %}" onclick="window.location.href='/calendar_page'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icons" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM1 14V4h14v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1m7-6.507c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
+        </svg>
+    </button>
+
+    <button type="button" class="page-btn {% if request.path == '/gifts' %}active{% endif %}" onclick="window.location.href='/gifts'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icons" viewBox="0 0 16 16">
+            <path d="M8 7.982C9.664 6.309 13.825 9.236 8 13 2.175 9.236 6.336 6.31 8 7.982"/>
+            <path d="M3.75 0a1 1 0 0 0-.8.4L.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4zm0 1H7.5v3h-6zM8.5 4V1h3.75l2.25 3zM15 5v10H1V5z"/>
+        </svg>
+    </button>
+</div>
+
+<script>
+    // ------------------ Chuva de corações ------------------
+  function criarCoracao() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart-drop");
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.width = "30px";   // tamanho fixo
+    heart.style.height = "30px";  // tamanho fixo
+    heart.style.animationDuration = (3 + Math.random() * 2) + "s";
+    heart.style.backgroundImage = 'url("https://nzglhtlkpdekehjsocps.supabase.co/storage/v1/object/public/imagens/fotos/heart.png")';
+    heart.style.filter = `drop-shadow(0 0 8px #FF69B4)`; // brilho suave
+    document.getElementById("heart-rain").appendChild(heart);
+    setTimeout(() => heart.remove(), parseFloat(heart.style.animationDuration) * 1000);
+}
+
+    setInterval(() => {
+        criarCoracao();
+        if(Math.random() > 0.5) criarCoracao();
+    }, 200);
+
+    // ------------------ Slideshow rápido ------------------
+    const fotos = [
+        "https://nzglhtlkpdekehjsocps.supabase.co/storage/v1/object/public/imagens/fotos/imagem4.jfif",
+        "https://nzglhtlkpdekehjsocps.supabase.co/storage/v1/object/public/imagens/fotos/imagem1.jfif",
+        "https://nzglhtlkpdekehjsocps.supabase.co/storage/v1/object/public/imagens/fotos/imagem3.jfif"
+    ];
+
+    let indice = 0;
+    const imgElement = document.getElementById("foto");
+    fotos.forEach(src => new Image().src = src);
+    imgElement.src = fotos[indice];
+
+    setInterval(() => {
+        imgElement.classList.add("fade-out");
+        setTimeout(() => {
+            indice = (indice + 1) % fotos.length;
+            imgElement.src = fotos[indice];
+            imgElement.classList.remove("fade-out");
+        }, 500);
+    }, 3000);
+
+    // ------------------ Contador ------------------
+    const dataInicio = new Date("2025-02-19T00:00:00");
+
+    function atualizarContador() {
+        const agora = new Date();
+        const diff = agora - dataInicio;
+
+        const segundos = Math.floor(diff / 1000) % 60;
+        const minutos = Math.floor(diff / (1000 * 60)) % 60;
+        const horas = Math.floor(diff / (1000 * 60 * 60)) % 24;
+        const diasTotais = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const meses = Math.floor(diasTotais / 30);
+        const dias = diasTotais % 30;
+
+        document.getElementById("meses").innerText = meses;
+        document.getElementById("dias").innerText = dias;
+        document.getElementById("horas").innerText = horas;
+        document.getElementById("minutos").innerText = minutos;
+        document.getElementById("segundos").innerText = segundos;
+    }
+
+    setInterval(atualizarContador, 1000);
+    atualizarContador();
+</script>
+
+</body>
+</html>

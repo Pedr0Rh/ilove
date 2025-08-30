@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Login com Cadeado</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .login-container {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .digits {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .digit {
+      width: 60px;
+      height: 70px;
+      font-size: 2em;
+      text-align: center;
+      border: 2px solid #333;
+      border-radius: 10px;
+      background: black;
+      color: lime;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #E75480;
+      color: white;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #c13b65;
+    }
+  </style>
+</head>
+<body>
+  <!-- container da chuva -->
+  <div id="heart-rain"></div>
+
+  <div class="login-container">
+    <h1>🔒 Digite a Senha Especial</h1>
+    <form method="POST" action="{{ url_for('logar') }}">
+      <div class="digits">
+        <input type="number" min="0" max="9" class="digit" id="d1" required>
+        <input type="number" min="0" max="9" class="digit" id="d2" required>
+        <input type="number" min="0" max="9" class="digit" id="d3" required>
+        <input type="number" min="0" max="9" class="digit" id="d4" required>
+      </div>
+      <!-- campo oculto que junta os 4 dígitos -->
+      <input type="hidden" name="password" id="password">
+      <button type="submit">Entrar</button>
+      <div id="message"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.querySelector("form");
+    form.addEventListener("submit", () => {
+      const senha = 
+        document.getElementById("d1").value +
+        document.getElementById("d2").value +
+        document.getElementById("d3").value +
+        document.getElementById("d4").value;
+      document.getElementById("password").value = senha;
+    });
+
+    // chuva de corações
+    function criarCoracao() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart-drop");
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.width = "30px";
+      heart.style.height = "30px";
+      heart.style.setProperty("--drift", Math.random() * 100 - 50 + "px");
+      heart.style.backgroundImage = "https://nzglhtlkpdekehjsocps.supabase.co/storage/v1/object/public/imagens/fotos/heart.png";
+      heart.style.animationDuration = (3 + Math.random() * 2) + "s";
+      document.getElementById("heart-rain").appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+    setInterval(criarCoracao, 300);
+  
+    const inputs = document.querySelectorAll(".digit");
+
+    // avançar automaticamente ao digitar
+    inputs.forEach((input, index) => {
+      input.addEventListener("input", (e) => {
+        if (input.value.length === 1 && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+
+      // voltar com backspace
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && input.value === "" && index > 0) {
+          inputs[index - 1].focus();
+        }
+      });
+    });
+
+    // capturar colagem (ex: "2344")
+    inputs[0].addEventListener("paste", (e) => {
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData("text");
+      for (let i = 0; i < inputs.length; i++) {
+        inputs[i].value = text[i] || "";
+      }
+    });
+
+    function verificarSenha() {
+      const senhaCorreta = "1234"; // 🔑 defina sua senha
+      let senhaDigitada = "";
+      inputs.forEach(input => senhaDigitada += input.value);
+
+      if (senhaDigitada === senhaCorreta) {
+        document.getElementById("message").innerHTML = "✅ Cadeado aberto!";
+        document.getElementById("message").style.color = "lime";
+      } else {
+        document.getElementById("message").innerHTML = "❌ Senha incorreta!";
+        document.getElementById("message").style.color = "red";
+      }
+    }
+  
+  </script>
+</body>
+</html>

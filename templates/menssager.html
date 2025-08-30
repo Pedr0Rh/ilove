@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menssager</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #FFE4E1, #FFD1DC, #FFC0CB);
+    color: #4B1D3F;
+}
+
+.superior {
+    text-align: center;
+    padding: 40px 20px 10px 20px;
+}
+
+.superior h1 {
+    font-size: 2.5em;
+    text-shadow: 1px 1px 3px #FFB6C1;
+}
+
+#heart-rain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
+}
+
+/* Linha do tempo */
+/* Formulário de adicionar eventos */
+.add-event {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background: linear-gradient(135deg, #FFE4E1, #FFD1DC);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.add-event:hover {
+    transform: translateY(-5px);
+}
+
+.add-event h3 {
+    font-size: 1.8em;
+    color: #C71585;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px #FFB6C1;
+}
+
+.add-event form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.add-event input,
+.add-event textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #ff69b4;
+    font-size: 1em;
+    transition: all 0.3s;
+}
+
+.add-event input:focus,
+.add-event textarea:focus {
+    outline: none;
+    border-color: #C71585;
+    box-shadow: 0 0 8px rgba(199, 21, 133, 0.4);
+}
+
+.add-event textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.add-event button {
+    padding: 12px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    background: #C71585;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.add-event button:hover {
+    background: #ff69b4;
+    transform: scale(1.05);
+}
+
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 50px auto;
+    padding-left: 40px;
+    padding-bottom: 120px; /* espaço extra para a barra inferior */
+}
+
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    width: 4px;
+    background-color: #ff69b4;
+    top: 0;
+    bottom: 0;
+    border-radius: 2px;
+}
+
+.timeline-event {
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.timeline-event:last-child {
+    margin-bottom: 0;
+}
+
+.timeline-event .dot {
+    position: absolute;
+    left: 12px;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border: 4px solid #ff69b4;
+    border-radius: 50%;
+    top: 0;
+}
+
+.timeline-event .content {
+    background: rgba(255, 240, 245, 0.9);
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-left: 40px;
+}
+
+.timeline-event .content h3 {
+    margin-top: 0;
+    color: #C71585;
+}
+
+.timeline-event .content p {
+    margin: 5px 0 0 0;
+}
+
+/* Inferior - botões */
+.inferior {
+    background-color: #fff0f5;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    gap: 10px;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+}
+
+.inferior button {
+    flex: 1;
+    background-color: #fff0f5;
+    height: 90px;
+    border-radius: 20%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.page-btn.active {
+    background-color: #ff69b4;
+    color: white;
+}
+
+/* Chuva de corações */
+.heart-drop {
+    position: absolute;
+    top: -50px;
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    animation-name: fall;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) translateX(var(--drift));
+        opacity: 0;
+    }
+}
+
+/* Formulário de adicionar eventos */
+#adicionar-evento {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    background: rgba(255, 240, 245, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+#adicionar-evento input, #adicionar-evento textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ff69b4;
+}
+#adicionar-evento button {
+    padding: 10px 20px;
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+<div class="timeline">
+    <!-- Formulário para adicionar eventos -->
+<div class="add-event">
+    <h3>Adicionar Evento</h3>
+    <form action="{{ url_for('add_event') }}" method="post">
+        <input type="text" name="date" placeholder="Data (dd/mm/aaaa)" required>
+        <input type="text" name="description" placeholder="Descrição" required>
+        <input type="text" name="music" placeholder="Link do iframe da música (opcional)">
+        <button type="submit">Adicionar</button>
+    </form>
+</div>
+    <h1>Linha Do Tempo</h1>
+    {% for event in events %}
+    <div class="timeline-event">
+        <div class="dot"></div>
+        <div class="content">
+            <h3>{{ event.date }}</h3>
+            <p>{{ event.description }}</p>
+            {% if event.music %}
+            <iframe width="100%" height="180" src="{{ event.music }}" frameborder="0" allowfullscreen></iframe>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="inferior">
+    <button type="button" class="page-btn {% if request.path == '/' %}active{% endif %}" onclick="window.location.href='/home'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icons" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2.854 15.854A.5.5 0 0 1 2 15.5V14H.5a.5.5 0 0 1-.354-.854l1.5-1.5A.5.5 0 0 1 2 11.5h1.793l.53-.53c-.771-.802-1.328-1.58-1.704-2.32-.798-1.575-.775-2.996-.213-4.092C3.426 2.565 6.18 1.809 8 3.233c1.25-.98 2.944-.928 4.212-.152L13.292 2 12.147.854A.5.5 0 0 1 12.5 0h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.854.354L14 2.707l-1.006 1.006c.236.248.44.531.6.845.562 1.096.585 2.517-.213 4.092-.793 1.563-2.395 3.288-5.105 5.08L8 13.912l-.276-.182a22 22 0 0 1-2.685-2.062l-.539.54V14a.5.5 0 0 1-.146.354zm2.893-4.894A20.4 20.4 0 0 0 8 12.71c2.456-1.666 3.827-3.207 4.489-4.512.679-1.34.607-2.42.215-3.185-.817-1.595-3.087-2.054-4.346-.761L8 4.62l-.358-.368c-1.259-1.293-3.53-.834-4.346.761-.392.766-.464 1.845.215 3.185.323.636.815 1.33 1.519 2.065l1.866-1.867a.5.5 0 1 1 .708.708z"/>
+        </svg>
+    </button>
+
+    <button type="button" class="page-btn {% if request.path == '/menssager' %}active{% endif %}" onclick="window.location.href='/menssager'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icons" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2.965 12.695a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6-3.004 6-7 6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2m-.8 3.108.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524 2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125M8 5.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
+        </svg>
+    </button>
+
+    <button type="button" class="page-btn {% if request.path == '/calendar_page' %}active{% endif %}" onclick="window.location.href='/calendar_page'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icons" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM1 14V4h14v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1m7-6.507c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132"/>
+        </svg>
+    </button>
+
+    <button type="button" class="page-btn {% if request.path == '/gifts' %}active{% endif %}" onclick="window.location.href='/gifts'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icons" viewBox="0 0 16 16">
+            <path d="M8 7.982C9.664 6.309 13.825 9.236 8 13 2.175 9.236 6.336 6.31 8 7.982"/>
+            <path d="M3.75 0a1 1 0 0 0-.8.4L.1 4.2a.5.5 0 0 0-.1.3V15a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4.5a.5.5 0 0 0-.1-.3L13.05.4a1 1 0 0 0-.8-.4zm0 1H7.5v3h-6zM8.5 4V1h3.75l2.25 3zM15 5v10H1V5z"/>
+        </svg>
+    </button>
+</div>
+<script src="{{ url_for('static', filename='index.js') }}"></script>
+<script>
+
+// Adicionar evento dinamicamente em ordem cronológica
+function adicionarEvento() {
+    const data = document.getElementById("novoEventoData").value;
+    const texto = document.getElementById("novoEventoTexto").value;
+    const musica = document.getElementById("novoEventoMusica").value;
+
+    if (!data || !texto) {
+        alert("Preencha pelo menos a data e a descrição!");
+        return;
+    }
+
+    const timeline = document.querySelector(".timeline");
+
+    const evento = document.createElement("div");
+    evento.classList.add("timeline-event");
+
+    const dot = document.createElement("div");
+    dot.classList.add("dot");
+
+    const content = document.createElement("div");
+    content.classList.add("content");
+
+    const h3 = document.createElement("h3");
+    h3.textContent = data;
+
+    const p = document.createElement("p");
+    p.textContent = texto;
+
+    content.appendChild(h3);
+    content.appendChild(p);
+
+    if (musica) {
+        const iframe = document.createElement("iframe");
+        iframe.width = "100%";
+        iframe.height = "180";
+        iframe.src = musica;
+        iframe.frameBorder = "0";
+        iframe.allowFullscreen = true;
+        content.appendChild(iframe);
+    }
+
+    evento.appendChild(dot);
+    evento.appendChild(content);
+
+    // Inserir em ordem cronológica
+    const eventosExistentes = Array.from(timeline.querySelectorAll(".timeline-event"));
+    let inserido = false;
+
+    for (let e of eventosExistentes) {
+        const dataExistente = e.querySelector("h3").textContent;
+        if (new Date(data) < new Date(dataExistente)) {
+            timeline.insertBefore(evento, e);
+            inserido = true;
+            break;
+        }
+    }
+
+    if (!inserido) {
+        timeline.appendChild(evento);
+    }
+
+    // Limpar campos
+    document.getElementById("novoEventoData").value = "";
+    document.getElementById("novoEventoTexto").value = "";
+    document.getElementById("novoEventoMusica").value = "";
+}
+</script>
+
+</body>
+</html>
